@@ -2,10 +2,11 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
-  devtool: 'inline-source-map',
+  // devtool: false, //prod
+  devtool: 'inline-source-map', //dev-only
   entry: './src/index.js',
   output: {
-    path: path.resolve(__dirname, '/dist'),
+    path: path.resolve(__dirname, 'build'),
     publicPath: '/',
     filename: 'bundle.[hash].js',
   },
@@ -19,7 +20,7 @@ module.exports = {
     }),
   ],
   devServer: {
-    contentBase: './dist',
+    contentBase: path.resolve(__dirname, 'build'),
     clientLogLevel: 'silent',
   },
   module: {
@@ -47,13 +48,7 @@ module.exports = {
               importLoaders: 1,
             },
           },
-          {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss',
-              plugins: [require('tailwindcss'), require('autoprefixer')],
-            },
-          },
+          'postcss-loader',
         ],
       },
     ],
